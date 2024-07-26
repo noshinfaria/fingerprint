@@ -1,7 +1,10 @@
+
+
+
 {% extends 'acs/base.html' %}
 {% load static %}
 
-{% block title %}Access Control System{% endblock title %} 
+{% block title %}Access Control System{% endblock title %}
 {% block cssLinks %}
   <link
       type="text/css"
@@ -30,12 +33,15 @@
             fill="black"
           />
         </svg>
+        <!-- Add the image tag for displaying the fingerprint -->
+        <img id="FPImage1" style="display:none;" alt="Fingerprint Image" />
       </div>
       <div id="base-64" class="container">
         <form id="base-64-form" action="{% url 'acs:auth' %}" method="post">
           {% csrf_token %}
           <input onchange="AutoSubmit()" type="text" name="img-base64" id="img-base64" />
           <button id="post-man" type="submit" style="display:none">Submit </button>
+          {% comment %} <h1>submit fingerprint</h1> {% endcomment %}
         </form>
       </div>
     </div>

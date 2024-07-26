@@ -50,6 +50,21 @@ function ShowDetails() {
       
 }
 
+// function convertBMPToJPG(bmpBase64) {
+//     var img = new Image();
+//     img.onload = function() {
+//         var canvas = document.createElement('canvas');
+//         var ctx = canvas.getContext('2d');
+//         canvas.width = img.width;
+//         canvas.height = img.height;
+//         ctx.drawImage(img, 0, 0);
+//         var jpgBase64 = canvas.toDataURL('image/jpeg');
+//         document.getElementById('img-base64').value = jpgBase64.split(',')[1]; // Remove the data:image/jpeg;base64, prefix
+//         AutoSubmit();
+//     };
+//     img.src = 'data:image/bmp;base64,' + bmpBase64;
+//   }
+
 function SuccessFunc(result) {
   if (result.ErrorCode == 0) {
       /* 	Display BMP data in image tag
@@ -57,8 +72,23 @@ function SuccessFunc(result) {
       */
       if (result != null && result.BMPBase64.length > 0) {
           document.getElementById("FPImage1").src = "data:image/bmp;base64," + result.BMPBase64;
+        //   convertBMPToJPG(result.BMPBase64);
           document.getElementById('img-base64').value = result.BMPBase64;
+
       }
+      // Display captured fingerprint details in a table
+    // var tbl = "<table border=1>";
+    // tbl += "<tr><td>Serial Number of Device</td><td><b>" + result.SerialNumber + "</b></td></tr>";
+    // tbl += "<tr><td>Image Height</td><td><b>" + result.ImageHeight + "</b></td></tr>";
+    // tbl += "<tr><td>Image Width</td><td><b>" + result.ImageWidth + "</b></td></tr>";
+    // tbl += "<tr><td>Image Resolution</td><td><b>" + result.ImageDPI + "</b></td></tr>";
+    // tbl += "<tr><td>Image Quality (1-100)</td><td><b>" + result.ImageQuality + "</b></td></tr>";
+    // tbl += "<tr><td>NFIQ (1-5)</td><td><b>" + result.NFIQ + "</b></td></tr>";
+    // tbl += "<tr><td>Template (base64)</td><td><b><textarea rows=8 cols=50>" + result.TemplateBase64 + "</textarea></b></td></tr>";
+    // tbl += "<tr><td>Image WSQ Size</td><td><b>" + result.WSQImageSize + "</b></td></tr>";
+    // tbl += "<tr><td>EncodeWSQ (base64)</td><td><b><textarea rows=8 cols=50>" + result.WSQImage + "</textarea></b></td></tr>";
+    // tbl += "</table>";
+    // document.getElementById('result').innerHTML = tbl;
   }
 
 
