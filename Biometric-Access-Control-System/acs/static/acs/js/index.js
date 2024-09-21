@@ -1,198 +1,92 @@
-
 function captureFP() {
-  CallSGIFPGetData(SuccessFunc, ErrorFunc);
-}
-
-/* 
-  This functions is called if the service sucessfully returns some data in JSON object
-*/
-function ShowDetails() {
-  var tbl = "<table border=1>";
-      tbl += "<tr>";
-      tbl += "<td> Serial Number of device </td>";
-      tbl += "<td> <b>" + result.SerialNumber + "</b> </td>";
-      tbl += "</tr>";
-      tbl += "<tr>";
-      tbl += "<td> Image Height</td>";
-      tbl += "<td> <b>" + result.ImageHeight + "</b> </td>";
-      tbl += "</tr>";
-      tbl += "<tr>";
-      tbl += "<td> Image Width</td>";
-      tbl += "<td> <b>" + result.ImageWidth + "</b> </td>";
-      tbl += "</tr>";
-      tbl += "<tr>";
-      tbl += "<td> Image Resolution</td>";
-      tbl += "<td> <b>" + result.ImageDPI + "</b> </td>";
-      tbl += "</tr>";
-      tbl += "<tr>";
-      tbl += "<td> Image Quality (1-100)</td>";
-      tbl += "<td> <b>" + result.ImageQuality + "</b> </td>";
-      tbl += "</tr>";
-      tbl += "<tr>";
-      tbl += "<td> NFIQ (1-5)</td>";
-      tbl += "<td> <b>" + result.NFIQ + "</b> </td>";
-      tbl += "</tr>";
-      tbl += "<tr>";
-      tbl += "<td> Template(base64)</td>";
-      tbl += "<td> <b> <textarea rows=8 cols=50>" + result.TemplateBase64 + "tb64</textarea></b> </td>";
-      tbl += "</tr>";
-      tbl += "<tr>";
-      tbl += "<td> Image WSQ Size</td>";
-      tbl += "<td> <b>" + result.WSQImageSize + "</b> </td>";
-      tbl += "</tr>";
-      tbl += "<tr>";
-      tbl += "<td> EncodeWSQ(base64)</td>";
-      tbl += "<td> <b> <textarea rows=8 cols=50>" + result.WSQImage + "</textarea></b> </td>";
-      tbl += "</tr>";
-      tbl += "</table>";
-      document.getElementById('result').innerHTML = tbl;
-
-      
-}
-
-// function convertBMPToJPG(bmpBase64) {
-//     var img = new Image();
-//     img.onload = function() {
-//         var canvas = document.createElement('canvas');
-//         var ctx = canvas.getContext('2d');
-//         canvas.width = img.width;
-//         canvas.height = img.height;
-//         ctx.drawImage(img, 0, 0);
-//         var jpgBase64 = canvas.toDataURL('image/jpeg');
-//         document.getElementById('img-base64').value = jpgBase64.split(',')[1]; // Remove the data:image/jpeg;base64, prefix
-//         AutoSubmit();
-//     };
-//     img.src = 'data:image/bmp;base64,' + bmpBase64;
-//   }
-
-function SuccessFunc(result) {
-  if (result.ErrorCode == 0) {
-      /* 	Display BMP data in image tag
-          BMP data is in base 64 format 
-      */
-      if (result != null && result.BMPBase64.length > 0) {
-          document.getElementById("FPImage1").src = "data:image/bmp;base64," + result.BMPBase64;
-        //   convertBMPToJPG(result.BMPBase64);
-          document.getElementById('img-base64').value = result.BMPBase64;
-
-      }
-      // Display captured fingerprint details in a table
-    // var tbl = "<table border=1>";
-    // tbl += "<tr><td>Serial Number of Device</td><td><b>" + result.SerialNumber + "</b></td></tr>";
-    // tbl += "<tr><td>Image Height</td><td><b>" + result.ImageHeight + "</b></td></tr>";
-    // tbl += "<tr><td>Image Width</td><td><b>" + result.ImageWidth + "</b></td></tr>";
-    // tbl += "<tr><td>Image Resolution</td><td><b>" + result.ImageDPI + "</b></td></tr>";
-    // tbl += "<tr><td>Image Quality (1-100)</td><td><b>" + result.ImageQuality + "</b></td></tr>";
-    // tbl += "<tr><td>NFIQ (1-5)</td><td><b>" + result.NFIQ + "</b></td></tr>";
-    // tbl += "<tr><td>Template (base64)</td><td><b><textarea rows=8 cols=50>" + result.TemplateBase64 + "</textarea></b></td></tr>";
-    // tbl += "<tr><td>Image WSQ Size</td><td><b>" + result.WSQImageSize + "</b></td></tr>";
-    // tbl += "<tr><td>EncodeWSQ (base64)</td><td><b><textarea rows=8 cols=50>" + result.WSQImage + "</textarea></b></td></tr>";
-    // tbl += "</table>";
-    // document.getElementById('result').innerHTML = tbl;
+    CallSGIFPGetData(SuccessFunc, ErrorFunc);
   }
+  
+  function SuccessFunc(result) {
+    console.log(result);  // Helpful for debugging
 
-
-  else {
-      alert("Fingerprint Capture Error Code:  " + result.ErrorCode + ".\nDescription:  " + ErrorCodeToString(result.ErrorCode) + ".\n \nPlease try again😔");
-      console.log("Fingerprint Capture Error Code:  " + result.ErrorCode + ".\nDescription:  " + ErrorCodeToString(result.ErrorCode) + ".\n \nPlease try again😔");
-  }
-}
-
-function ErrorFunc(status) {
-
-  /* 	
-      If you reach here, user is probabaly not running the 
-      service. Redirect the user to a page where he can download the
-      executable and install it. 
-  */
-  alert("Check if SGIBIOSRV is running; Status = " + status + ":");
-
-}
-
-
-function CallSGIFPGetData(successCall, failCall) {
-    // i guess this makes the call to the server and probably gets the JSON data
-  // 8.16.2017 - At this time, only SSL client will be supported.
-  var uri = "https://localhost:8443/SGIFPCapture";
-
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-          fpobject = JSON.parse(xmlhttp.responseText);
-          successCall(fpobject);
+    if (result.ErrorCode === 0) {
+      if (result && result.BMPBase64.length > 0) {
+        const fpImage = document.getElementById("FPImage1").src = "data:image/bmp;base64," + result.BMPBase64;
+        document.getElementById('img_base64').value = 'data:image/bmp;base64,' + result.BMPBase64;
+        // document.getElementById('submit-button').click();
+        // Hide the SVG and show the captured image
+        // document.getElementById('captureSVG').style.display = 'none';
+        // fpImage.style.display = 'block';
       }
-      else if (xmlhttp.status == 404) {
-          failCall(xmlhttp.status)
-      }
+    } else {
+      alert("Fingerprint Capture Error Code: " + result.ErrorCode + ".\nDescription: " + ErrorCodeToString(result.ErrorCode) + ".\n\nPlease try again😔");
+    }
   }
-  var params = "Timeout=" + "10000";
-  params += "&Quality=" + "50";
-  params += "&licstr=" + encodeURIComponent(secugen_lic);
-  params += "&templateFormat=" + "ISO";
-  params += "&imageWSQRate=" + "0.75";
-  console.log
-  xmlhttp.open("POST", uri, true);
-  xmlhttp.send(params);
-
-  xmlhttp.onerror = function () {
+  
+  function ErrorFunc(status) {
+    alert("Check if SGIBIOSRV is running; Status = " + status + ":");
+  }
+  
+  function CallSGIFPGetData(successCall, failCall) {
+    var uri = "https://localhost:8443/SGIFPCapture";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+        var fpobject = JSON.parse(xmlhttp.responseText);
+        successCall(fpobject);
+      } else if (xmlhttp.status === 404) {
+        failCall(xmlhttp.status);
+      }
+    };
+    var params = "Timeout=10000&Quality=50&licstr=" + encodeURIComponent(secugen_lic) + "&templateFormat=ISO&imageWSQRate=0.75";
+    xmlhttp.open("POST", uri, true);
+    xmlhttp.send(params);
+    xmlhttp.onerror = function () {
       failCall(xmlhttp.statusText);
+    };
   }
-}
-
-
-var secugen_lic = "";
-
-
-function ErrorCodeToString(ErrorCode) {
+  
+  var secugen_lic = "";
+  
+  function ErrorCodeToString(ErrorCode) {
     var Description;
     switch (ErrorCode) {
-        // 0 - 999 - Comes from SgFplib.h
-        // 1,000 - 9,999 - SGIBioSrv errors 
-        // 10,000 - 99,999 license errors
-        case 51:
-            Description = "System file load failure";
-            break;
-        case 52:
-            Description = "Sensor chip initialization failed";
-            break;
-        case 53:
-            Description = "Device not found";
-            break;
-        case 54:
-            Description = "Fingerprint image capture timeout";
-            break;
-        case 55:
-            Description = "No device available";
-            break;
-        case 56:
-            Description = "Driver load failed";
-            break;
-        case 57:
-            Description = "Wrong Image";
-            break;
-        case 58:
-            Description = "Lack of bandwidth";
-            break;
-        case 59:
-            Description = "Device Busy";
-            break;
-        case 60:
-            Description = "Cannot get serial number of the device";
-            break;
-        case 61:
-            Description = "Unsupported device";
-            break;
-        case 63:
-            Description = "SgiBioSrv didn't start; Try image capture again";
-            break;
-        default:
-            Description = "Unknown error code or Update code to reflect latest result";
-            break;
+      case 51:
+        Description = "System file load failure";
+        break;
+      case 52:
+        Description = "Sensor chip initialization failed";
+        break;
+      case 53:
+        Description = "Device not found";
+        break;
+      case 54:
+        Description = "Fingerprint image capture timeout";
+        break;
+      case 55:
+        Description = "No device available";
+        break;
+      case 56:
+        Description = "Driver load failed";
+        break;
+      case 57:
+        Description = "Wrong Image";
+        break;
+      case 58:
+        Description = "Lack of bandwidth";
+        break;
+      case 59:
+        Description = "Device Busy";
+        break;
+      case 60:
+        Description = "Cannot get serial number of the device";
+        break;
+      case 61:
+        Description = "Unsupported device";
+        break;
+      case 63:
+        Description = "SgiBioSrv didn't start; Try image capture again";
+        break;
+      default:
+        Description = "Unknown error code or Update code to reflect latest result";
+        break;
     }
     return Description;
-}
-
-function AutoSubmit() {
-    const trigger = document.getElementById("post-man");
-    trigger.click();
-}
+  }
+  
