@@ -38,6 +38,35 @@
           <option value="O+">O+</option>
           <option value="O-">O-</option>
         </select> <br> <br>
+
+        <!-- Visible input field for sex -->
+        <label for="sex">Enter Sex:</label>
+        <select name="sex" id="sex" required>
+          <option value="" disabled selected>Select your sex</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Others">Others</option>
+        </select> <br> <br>
+
+        <!-- Visible input field for hormonal issues -->
+        <label for="hormonalIssue">Enter Hormonal Issue:</label>
+        <select name="hormonalIssue" id="hormonalIssue" required>
+          <option value="" disabled selected>Select your hormonal issue</option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select> <br> <br>
+
+        <!-- Visible input field for blood pressure -->
+        <label for="bloodPressure">Enter Hormonal Issue:</label>
+        <select name="bloodPressure" id="bloodPressure" required>
+          <option value="" disabled selected>Select your blood pressure</option>
+          <option value="High">High</option>
+          <option value="Low">Low</option>
+        </select> <br> <br>
+
+        <!-- Visible input field for BMI -->
+        <label for="bmi">Enter BMI:</label>
+        <input type="number" name="bmi" id="bmi" step="0.1" min="0" max="100" required> <br> <br>
         
         <button id="submit-button" type="submit">Submit</button>
         </form>

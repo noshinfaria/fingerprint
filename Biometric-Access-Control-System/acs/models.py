@@ -7,6 +7,11 @@ class MyModel(models.Model):
 
   image = models.ImageField(upload_to=get_upload_path)
   blood_group = models.CharField(max_length=5, default="")
+  sex = models.CharField(max_length=5, default="")
+  blood_pressure = models.CharField(max_length=5, default="")
+  hormonal_issue = models.CharField(max_length=5, default="")
+  bmi = models.FloatField(default=0)
+
 
     
 

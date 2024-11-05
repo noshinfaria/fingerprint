@@ -100,6 +100,10 @@ def auth(request):
     if request.method == 'POST':
         base64_fprint = request.POST.get('img_base64')
         bloodGroup = request.POST.get('bloodGroup')
+        sex = request.POST.get('sex')
+        hormonalIssue = request.POST.get('hormonalIssue')
+        bloodPressure = request.POST.get('bloodPressure')
+        bmi = request.POST.get('bmi')
         print(bloodGroup)
         if base64_fprint:
             # Splitting the base64 string to get the image data
@@ -115,7 +119,13 @@ def auth(request):
             img_io.seek(0)  # Seek to the beginning of the stream
 
             # Create a new instance of MyModel and set the blood group
-            instance = MyModel(blood_group=bloodGroup)
+            instance = MyModel(
+                    blood_group=bloodGroup,
+                    sex=sex,
+                    hormonal_issue=hormonalIssue,
+                    blood_pressure=bloodPressure,
+                    bmi=bmi
+                )
             instance.save()
 
             # Generate the filename using the instance ID and PNG extension

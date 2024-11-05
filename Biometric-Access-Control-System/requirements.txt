@@ -18,3 +18,4 @@ six
 sqlparse
 toml
 wrapt
+pymysql
