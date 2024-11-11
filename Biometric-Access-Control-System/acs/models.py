@@ -1,7 +1,19 @@
 from django.db import models
 
 class MyModel(models.Model):
-    image = models.ImageField(upload_to='images/')
+  def get_upload_path(instance, filename):
+        # This will save the image in a folder named after the blood group
+        return f'images/{instance.blood_group}/{filename}'
+
+  image = models.ImageField(upload_to=get_upload_path)
+  blood_group = models.CharField(max_length=5, default="")
+  sex = models.CharField(max_length=5, default="")
+  blood_pressure = models.CharField(max_length=5, default="")
+  hormonal_issue = models.CharField(max_length=5, default="")
+  bmi = models.FloatField(default=0)
+
+
+    
 
 # Create your models here.
 class Student(models.Model):
