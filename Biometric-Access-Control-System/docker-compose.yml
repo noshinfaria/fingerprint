@@ -1,6 +1,17 @@
-version: '3.8'
+version: "3.8"
 
 services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: your_database_name
+      MYSQL_USER: your_mysql_user
+      MYSQL_PASSWORD: your_mysql_password
+      MYSQL_ROOT_PASSWORD: your_root_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -8,6 +19,15 @@ services:
       - .:/app
     ports:
       - "8000:8000"
-    # You may want to add this environment variable for collecting static files
     environment:
       - DJANGO_SETTINGS_MODULE=AccessControlSystem.settings
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_DATABASE=your_database_name
+      - MYSQL_USER=your_mysql_user
+      - MYSQL_PASSWORD=your_mysql_password
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:
