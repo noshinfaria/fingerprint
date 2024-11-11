@@ -1,17 +1,20 @@
 from django.db import models
 
+
 class MyModel(models.Model):
   def get_upload_path(instance, filename):
         # This will save the image in a folder named after the blood group
         return f'images/{instance.blood_group}/{filename}'
 
   image = models.ImageField(upload_to=get_upload_path)
-  blood_group = models.CharField(max_length=5, default="")
-  sex = models.CharField(max_length=5, default="")
-  blood_pressure = models.CharField(max_length=5, default="")
-  hormonal_issue = models.CharField(max_length=5, default="")
+  blood_group = models.CharField(max_length=25, default="")
+  sex = models.CharField(max_length=25, default="")
+  blood_pressure = models.CharField(max_length=25, default="")
+  hormonal_issue = models.CharField(max_length=25, default="")
   bmi = models.FloatField(default=0)
 
+  def __str__(self):
+    return self.blood_group
 
     
 

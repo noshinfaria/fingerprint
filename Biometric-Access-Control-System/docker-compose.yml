@@ -4,10 +4,10 @@ services:
   db:
     image: mysql:latest
     environment:
-      MYSQL_DATABASE: your_database_name
-      MYSQL_USER: your_mysql_user
-      MYSQL_PASSWORD: your_mysql_password
-      MYSQL_ROOT_PASSWORD: your_root_password
+      MYSQL_DATABASE: fingerprint_database
+      MYSQL_USER: fingerprint
+      MYSQL_PASSWORD: fingerprint
+      MYSQL_ROOT_PASSWORD: fingerprint
     ports:
       - "3306:3306"
     volumes:
@@ -23,9 +23,9 @@ services:
       - DJANGO_SETTINGS_MODULE=AccessControlSystem.settings
       - MYSQL_HOST=db
       - MYSQL_PORT=3306
-      - MYSQL_DATABASE=your_database_name
-      - MYSQL_USER=your_mysql_user
-      - MYSQL_PASSWORD=your_mysql_password
+      - MYSQL_DATABASE=fingerprint_database
+      - MYSQL_USER=fingerprint
+      - MYSQL_PASSWORD=fingerprint
     depends_on:
       - db
 
