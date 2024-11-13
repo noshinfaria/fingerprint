@@ -1,17 +1,6 @@
 version: "3.8"
 
 services:
-  db:
-    image: mysql:latest
-    environment:
-      MYSQL_DATABASE: fingerprint_database
-      MYSQL_USER: fingerprint
-      MYSQL_PASSWORD: fingerprint
-      MYSQL_ROOT_PASSWORD: fingerprint
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -28,6 +17,37 @@ services:
       - MYSQL_PASSWORD=fingerprint
     depends_on:
       - db
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: fingerprint_database
+      MYSQL_USER: fingerprint
+      MYSQL_PASSWORD: fingerprint
+      MYSQL_ROOT_PASSWORD: fingerprint
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
 
 volumes:
   mysql_data:
+# services:
+#   db:
+#     image: mysql:9.1.0
+#     environment:
+#       MYSQL_ROOT_PASSWORD: fingerprint
+#       MYSQL_DATABASE: fingerprint_database
+#   web:
+#     build: .
+#     depends_on:
+#       - db
+#     entrypoint:
+#       [
+#         "./wait-for-it.sh",
+#         "db:3306",
+#         "--",
+#         "python",
+#         "manage.py",
+#         "runserver",
+#         "0.0.0.0:8000",
+#       ]

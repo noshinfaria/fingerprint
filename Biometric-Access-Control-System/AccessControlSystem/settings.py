@@ -90,13 +90,14 @@ WSGI_APPLICATION = 'AccessControlSystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('MYSQL_DATABASE', 'your_database_name'),
-        'USER': os.getenv('MYSQL_USER', 'your_mysql_user'),
-        'PASSWORD': os.getenv('MYSQL_PASSWORD', 'your_mysql_password'),
+        'NAME': os.getenv('MYSQL_DATABASE', 'fingerprint_database'),
+        'USER': os.getenv('MYSQL_USER', 'fingerprint'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD', 'fingerprint'),
         'HOST': os.getenv('MYSQL_HOST', 'db'),  # "db" is the name of the MySQL service in docker-compose
         'PORT': os.getenv('MYSQL_PORT', '3306'),
     }
 }
+
 
 
 # Password validation
