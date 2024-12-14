@@ -20,4 +20,4 @@ toml
 wrapt
 pymysql
 mysqlclient
-cryptography
+cryptography>=3.2
